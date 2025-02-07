@@ -1,22 +1,12 @@
 import streamlit as st
-import wireviz.wireviz as wv
+import wireviz.wireviz as wvasdf
 
-with st.form("output options"):
-    outpng = st.checkbox("png")
-    st.form_submit_button('Save')
-
+st.write('Wireviz YAML to PNG')
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
-    st.write('uploaded!')
     with open("temp.txt", "wb") as f:
         f.write(uploaded_file.getbuffer())
-    wv.parse("./temp.txt", "png", "png", "./", "test", "./")
-
-st.write('OR')
-
-with st.form("wireviz text input"):
-    st.write('Text input:')
-    st.text_area('wireviz file content')
-    st.form_submit_button('Submit')
-    st.text_area('Preview')
-    st.form_submit_button('Download')
+    output = wvasdf.parse(inp=("C:/Users/jeffrey/Documents/GitHub/wireviz-streamlit/temp.txt"), output_formats=("png"), return_types=("png"))
+    st.write('Preview:')
+    st.image(output)
+    st.download_button("Download image file", output, "output.png")
